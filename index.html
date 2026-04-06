@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio - Mahasiswa Informatika</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-brand">Ahmad Iqbal</div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="dark-mode-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+      <button id="hamburger" aria-label="Toggle menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-content">
+      <img src="assets/profile.jpg" alt="Foto Profil Ahmad Iqbal" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Iqbal&size=200&background=2563eb&color=fff'" />
+      <h1 class="hero-name">Ahmad Iqbal</h1>
+      <p class="hero-tagline">Mahasiswa Informatika | Web Developer &amp; Network Enthusiast</p>
+      <p class="hero-desc">Passionate tentang teknologi, suka membangun solusi digital yang bermanfaat. Fokus di web development, networking, dan software engineering.</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">Lihat Proyek</a>
+        <a href="#contact" class="btn btn-secondary">Kontak Saya</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="animate-on-scroll">
+    <div class="container">
+      <h2 class="section-title">Tentang Saya</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Halo! Saya <strong>Ahmad Iqbal</strong>, mahasiswa Teknik Informatika semester 5 yang memiliki passion besar di bidang teknologi informasi. Saya aktif belajar dan mengembangkan diri di berbagai bidang IT.</p>
+          <p>Latar belakang saya dimulai dari SMK Teknik Komputer dan Jaringan (TKJ), di mana saya mendapatkan fondasi kuat dalam networking dan sistem komputer. Kini saya melanjutkan studi di Universitas untuk memperdalam ilmu software engineering dan web development.</p>
+          <p class="about-interests">Minat saya meliputi: <strong>Web Development</strong>, <strong>Network Engineering</strong>, <strong>Linux System Administration</strong>, dan <strong>Database Management</strong>.</p>
+        </div>
+        <div class="about-highlights">
+          <div class="highlight-card">
+            <i class="fas fa-code"></i>
+            <h3>Web Development</h3>
+            <p>Membangun aplikasi web modern yang responsif dan user-friendly</p>
+          </div>
+          <div class="highlight-card">
+            <i class="fas fa-network-wired"></i>
+            <h3>Networking</h3>
+            <p>Konfigurasi dan manajemen jaringan komputer</p>
+          </div>
+          <div class="highlight-card">
+            <i class="fab fa-linux"></i>
+            <h3>Linux</h3>
+            <p>Administrasi sistem Linux dan scripting</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Keahlian</h2>
+      <div class="skills-grid" id="skills-container">
+        <!-- Skill cards diinjeksi oleh JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Proyek</h2>
+      <div class="projects-grid" id="projects-container">
+        <!-- Project cards diinjeksi oleh JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <h2 class="section-title">Pendidikan</h2>
+      <div class="timeline">
+        <div class="timeline-item animate-on-scroll">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="edu-period">2022 – Sekarang</span>
+            <h3>Universitas Teknologi Indonesia</h3>
+            <p class="edu-program">S1 Teknik Informatika</p>
+            <p class="edu-desc">Fokus pada software engineering, algoritma, dan pengembangan aplikasi web. Aktif dalam organisasi himpunan mahasiswa informatika.</p>
+          </div>
+        </div>
+        <div class="timeline-item animate-on-scroll">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="edu-period">2019 – 2022</span>
+            <h3>SMK Negeri 1 Teknologi</h3>
+            <p class="edu-program">Teknik Komputer dan Jaringan (TKJ)</p>
+            <p class="edu-desc">Mempelajari dasar-dasar jaringan komputer, instalasi sistem operasi, dan pemrograman dasar. Lulus dengan predikat sangat memuaskan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Kontak</h2>
+      <div class="contact-wrapper">
+        <div class="contact-info animate-on-scroll">
+          <h3>Mari Terhubung</h3>
+          <p>Saya terbuka untuk peluang kerja sama, proyek freelance, atau sekadar berdiskusi tentang teknologi.</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:ahmad.iqbal@email.com">ahmad.iqbal@email.com</a>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Indonesia</span>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="https://github.com/ahmadiqbal" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/ahmadiqbal" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://instagram.com/ahmadiqbal" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <form id="contact-form" class="animate-on-scroll" novalidate>
+          <div class="form-group">
+            <label for="name">Nama</label>
+            <input type="text" id="name" name="name" placeholder="Nama lengkap Anda" required />
+            <span class="error-msg" id="name-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="email@contoh.com" required />
+            <span class="error-msg" id="email-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="message">Pesan</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tulis pesan Anda di sini..." required></textarea>
+            <span class="error-msg" id="message-error"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Kirim Pesan <i class="fas fa-paper-plane"></i></button>
+          <div id="form-success" class="success-msg hidden">
+            <i class="fas fa-check-circle"></i> Pesan berhasil terkirim! Terima kasih.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Ahmad Iqbal. Dibuat dengan <i class="fas fa-heart"></i> menggunakan HTML, CSS &amp; JavaScript.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
