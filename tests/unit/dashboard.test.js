@@ -51,7 +51,7 @@ describe('Dashboard', () => {
   // 1. render menyuntikkan HTML dashboard ke dalam container
   it('render menyuntikkan HTML dashboard ke dalam container', () => {
     expect(container.innerHTML).not.toBe('');
-    expect(container.querySelector('.dashboard')).not.toBeNull();
+    expect(container.querySelector('.app-shell')).not.toBeNull();
   });
 
   // 2. Dashboard memiliki tombol kamera (#camera-btn)

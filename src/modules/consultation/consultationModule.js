@@ -195,5 +195,49 @@ export function exportToCalendar(consultation) {
  * @param {HTMLElement} container
  */
 export function render(container) {
-  container.innerHTML = `<div class="consultation-page"><h1>Jadwal Konsultasi</h1><p>Fitur jadwal konsultasi tersedia di sini.</p><a href="#/dashboard">Kembali</a></div>`;
+  container.innerHTML = `
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">P</div>
+      <div class="sidebar-title">PANTAS</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Monitor</div>
+        <a href="#/dashboard" class="sidebar-link">
+          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>
+          Dashboard
+        </a>
+        <a href="#/history" class="sidebar-link">
+          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 7.75H5.5a.75.75 0 010-1.5h2.5V4.25a.75.75 0 011.5 0v4a.75.75 0 01-.75.75z"/></svg>
+          Riwayat
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Manajemen</div>
+        <a href="#/reminders" class="sidebar-link">
+          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a5 5 0 00-5 5v2.586l-.707.707A1 1 0 003 11h10a1 1 0 00.707-1.707L13 8.586V6a5 5 0 00-5-5zm0 13a2 2 0 01-2-2h4a2 2 0 01-2 2z"/></svg>
+          Pengingat Obat
+        </a>
+        <a href="#/consultation" class="sidebar-link active">
+          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H9l-3 3v-3H3a1 1 0 01-1-1V3z"/></svg>
+          Konsultasi
+        </a>
+      </div>
+    </nav>
+  </aside>
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left"><span class="topbar-title">Jadwal Konsultasi</span></div>
+    </header>
+    <div class="page-content">
+      <div class="placeholder-page">
+        <div class="placeholder-icon">🩺</div>
+        <div class="placeholder-title">Jadwal Konsultasi Dokter</div>
+        <div class="placeholder-desc">Buat dan kelola jadwal konsultasi dengan dokter spesialis. Dapatkan pengingat otomatis 1 jam sebelum jadwal konsultasi Anda.</div>
+      </div>
+    </div>
+  </div>
+</div>`;
 }

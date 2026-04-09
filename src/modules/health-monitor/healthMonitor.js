@@ -1,16 +1,16 @@
 /**
  * Health Monitor — mengelola penerimaan dan pemrosesan data biometrik dari smartwatch.
+ * Mendukung Web Bluetooth API via smartwatchAdapter, dengan fallback ke mock.
  */
 
 import eventBus from '../../utils/eventBus.js';
 import * as smartwatchAdapter from './smartwatchAdapter.js';
 
 // Internal state
-let _connectionStatus = 'disconnected'; // 'connected' | 'disconnected' | 'error'
+let _connectionStatus = 'disconnected';
 let _lastReading = { heartRate: null, bloodPressure: null };
 let _intervalId = null;
 
-// Simple UUID fallback (crypto.randomUUID when available, otherwise manual)
 function generateId() {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID();
@@ -24,12 +24,6 @@ function generateId() {
 
 const DEFAULT_USER_ID = 'user-001';
 
-/**
- * Process a heart rate reading.
- * @param {number} bpm
- * @param {Date} timestamp
- * @returns {HeartRateReading}
- */
 export function processHeartRate(bpm, timestamp) {
   return {
     id: generateId(),
@@ -41,13 +35,6 @@ export function processHeartRate(bpm, timestamp) {
   };
 }
 
-/**
- * Process a blood pressure reading.
- * @param {number} systolic
- * @param {number} diastolic
- * @param {Date} timestamp
- * @returns {BloodPressureReading}
- */
 export function processBloodPressure(systolic, diastolic, timestamp) {
   let riskLevel;
   if (systolic > 140 || diastolic > 90) {
@@ -57,7 +44,6 @@ export function processBloodPressure(systolic, diastolic, timestamp) {
   } else {
     riskLevel = 'normal';
   }
-
   return {
     id: generateId(),
     userId: DEFAULT_USER_ID,
@@ -69,45 +55,78 @@ export function processBloodPressure(systolic, diastolic, timestamp) {
   };
 }
 
+export function getConnectionStatus() { return _connectionStatus; }
+export function getLastReading()      { return { ..._lastReading }; }
+export function setConnectionStatus(status) { _connectionStatus = status; }
+
 /**
- * Get the current smartwatch connection status.
- * @returns {'connected' | 'disconnected' | 'error'}
+ * Connect ke smartwatch via Web Bluetooth.
+ * Jika Bluetooth tidak tersedia, otomatis fallback ke mock.
+ * @returns {Promise<{ success: boolean, mode: string, deviceName?: string }>}
  */
-export function getConnectionStatus() {
-  return _connectionStatus;
+export async function connectSmartwatch() {
+  // Register callbacks sebelum connect
+  smartwatchAdapter.onHeartRate(({ bpm, timestamp }) => {
+    const heartRate = processHeartRate(bpm, timestamp);
+    _lastReading.heartRate = heartRate;
+    eventBus.emit('health:update', {
+      connectionStatus: _connectionStatus,
+      lastReading: getLastReading(),
+    });
+  });
+
+  smartwatchAdapter.onBloodPressure(({ systolic, diastolic, timestamp }) => {
+    const bloodPressure = processBloodPressure(systolic, diastolic, timestamp);
+    _lastReading.bloodPressure = bloodPressure;
+    eventBus.emit('health:update', {
+      connectionStatus: _connectionStatus,
+      lastReading: getLastReading(),
+    });
+  });
+
+  smartwatchAdapter.onConnectionChange((status, mode, deviceName) => {
+    _connectionStatus = status;
+    eventBus.emit('health:connection', { status, mode, deviceName });
+    eventBus.emit('health:update', {
+      connectionStatus: _connectionStatus,
+      lastReading: getLastReading(),
+    });
+  });
+
+  const result = await smartwatchAdapter.connect();
+
+  if (result.success) {
+    _connectionStatus = 'connected';
+    // Jika mode mock, mulai interval mock
+    if (result.mode === 'mock') {
+      smartwatchAdapter.startMock(5000);
+    }
+  }
+
+  return result;
 }
 
 /**
- * Get the last known readings (never null if data was received before).
- * @returns {{ heartRate: HeartRateReading | null, bloodPressure: BloodPressureReading | null }}
+ * Disconnect dari smartwatch.
  */
-export function getLastReading() {
-  return { ..._lastReading };
+export function disconnectSmartwatch() {
+  smartwatchAdapter.stopMock();
+  smartwatchAdapter.disconnect();
+  _connectionStatus = 'disconnected';
+  eventBus.emit('health:connection', { status: 'disconnected' });
 }
 
 /**
- * For testing: allows setting connection status externally.
- * @param {'connected' | 'disconnected' | 'error'} status
- */
-export function setConnectionStatus(status) {
-  _connectionStatus = status;
-}
-
-/**
- * Start polling the smartwatch adapter at the given interval.
- * Updates internal state and emits 'health:update' via eventBus.
- * @param {number} intervalMs
+ * Start polling (legacy / fallback interval-based).
+ * Digunakan jika connectSmartwatch() tidak dipanggil.
  */
 export function startMonitoring(intervalMs) {
-  if (_intervalId !== null) {
-    stopMonitoring();
-  }
+  if (_intervalId !== null) stopMonitoring();
 
   _intervalId = setInterval(() => {
     const raw = smartwatchAdapter.generateReading();
 
     if (raw === null) {
-      // Disconnection detected — keep last reading, update status
       _connectionStatus = 'disconnected';
       eventBus.emit('health:update', {
         connectionStatus: _connectionStatus,
@@ -116,12 +135,9 @@ export function startMonitoring(intervalMs) {
       return;
     }
 
-    // Connected — process and store readings
     _connectionStatus = 'connected';
-
-    const heartRate = processHeartRate(raw.bpm, raw.timestamp);
+    const heartRate    = processHeartRate(raw.bpm, raw.timestamp);
     const bloodPressure = processBloodPressure(raw.systolic, raw.diastolic, raw.timestamp);
-
     _lastReading = { heartRate, bloodPressure };
 
     eventBus.emit('health:update', {
@@ -131,9 +147,6 @@ export function startMonitoring(intervalMs) {
   }, intervalMs);
 }
 
-/**
- * Stop the monitoring interval.
- */
 export function stopMonitoring() {
   if (_intervalId !== null) {
     clearInterval(_intervalId);

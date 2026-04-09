@@ -3,35 +3,26 @@ const SESSION_KEY = 'pantas_session';
 const LOGIN_TEMPLATE = `
 <div class="auth-container">
   <div class="auth-card">
-    <div class="auth-header">
-      <h1 class="auth-title">PANTAS</h1>
-      <p class="auth-subtitle">Platform Monitoring PTM Terintegrasi</p>
+    <div class="auth-brand">
+      <div class="auth-brand-mark">P</div>
+      <div>
+        <div class="auth-brand-name">PANTAS</div>
+        <div class="auth-brand-sub">Platform Monitoring PTM Terintegrasi</div>
+      </div>
     </div>
-    <form id="login-form" novalidate>
+    <div class="auth-title">Masuk ke akun Anda</div>
+    <div class="auth-subtitle">Gunakan email dan password yang terdaftar</div>
+    <form id="login-form" novalidate style="margin-top:20px;">
       <div class="form-group">
         <label for="login-email">Email</label>
-        <input
-          type="email"
-          id="login-email"
-          name="email"
-          placeholder="Masukkan email Anda"
-          autocomplete="email"
-          required
-        />
+        <input type="email" id="login-email" name="email" placeholder="nama@email.com" autocomplete="email" required />
       </div>
       <div class="form-group">
         <label for="login-password">Password</label>
-        <input
-          type="password"
-          id="login-password"
-          name="password"
-          placeholder="Masukkan password Anda"
-          autocomplete="current-password"
-          required
-        />
+        <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required />
       </div>
       <div id="login-error" class="error-message" role="alert" aria-live="polite"></div>
-      <button type="submit" class="btn-primary">Masuk</button>
+      <button type="submit" class="btn btn-primary btn-full" style="margin-top:4px;">Masuk</button>
     </form>
   </div>
 </div>

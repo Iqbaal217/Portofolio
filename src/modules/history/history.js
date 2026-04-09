@@ -8,12 +8,15 @@ import { getHistory } from '../health-repository/healthRepository.js';
 const HISTORY_HTML = `
 <div class="history-page">
   <header class="page-header">
-    <a href="#/dashboard" class="back-link">&larr; Kembali ke Dashboard</a>
-    <h1 class="page-title">Riwayat Kesehatan</h1>
+    <a href="#/dashboard" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M10 3L4 8l6 5V3z"/></svg>
+      Dashboard
+    </a>
+    <span class="page-title">Riwayat Kesehatan</span>
   </header>
 
   <main class="history-main">
-    <section class="filter-section">
+    <div class="filter-section">
       <form id="filter-form" class="filter-form">
         <div class="filter-group">
           <label for="filter-type">Jenis Data</label>
@@ -25,24 +28,26 @@ const HISTORY_HTML = `
             <option value="risk_notification">Notifikasi Risiko</option>
           </select>
         </div>
-
         <div class="filter-group">
-          <label for="filter-start">Tanggal Mulai</label>
+          <label for="filter-start">Dari Tanggal</label>
           <input type="date" id="filter-start" name="filter-start" />
         </div>
-
         <div class="filter-group">
-          <label for="filter-end">Tanggal Akhir</label>
+          <label for="filter-end">Sampai Tanggal</label>
           <input type="date" id="filter-end" name="filter-end" />
         </div>
-
-        <button type="submit" id="filter-btn" class="btn btn-primary">Terapkan Filter</button>
+        <button type="submit" id="filter-btn" class="btn btn-primary btn-sm" style="align-self:flex-end;">Terapkan</button>
       </form>
-    </section>
+    </div>
 
-    <section class="history-section">
+    <div class="history-section">
+      <div class="history-table-header">
+        <span>Tipe</span>
+        <span>Data</span>
+        <span style="text-align:right;">Waktu</span>
+      </div>
       <ul id="history-list" class="history-list"></ul>
-    </section>
+    </div>
   </main>
 </div>
 `;
