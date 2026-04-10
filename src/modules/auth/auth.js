@@ -1,29 +1,33 @@
 const SESSION_KEY = 'pantas_session';
 
 const LOGIN_TEMPLATE = `
-<div class="auth-container">
+<div class="auth-screen">
   <div class="auth-card">
-    <div class="auth-brand">
-      <div class="auth-brand-mark">P</div>
-      <div>
-        <div class="auth-brand-name">PANTAS</div>
-        <div class="auth-brand-sub">Platform Monitoring PTM Terintegrasi</div>
+    <div class="auth-logo-row">
+      <div class="auth-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
       </div>
+      <span class="auth-logo-name">PANTAS</span>
     </div>
-    <div class="auth-title">Masuk ke akun Anda</div>
-    <div class="auth-subtitle">Gunakan email dan password yang terdaftar</div>
-    <form id="login-form" novalidate style="margin-top:20px;">
+    <div class="auth-heading">Platform Monitoring PTM Terintegrasi</div>
+    <div class="auth-subheading">Masuk untuk memantau kesehatan Anda</div>
+    <form id="login-form" novalidate>
       <div class="form-group">
         <label for="login-email">Email</label>
-        <input type="email" id="login-email" name="email" placeholder="nama@email.com" autocomplete="email" required />
+        <input type="email" id="login-email" name="email" placeholder="anda@email.com" autocomplete="email" required />
       </div>
       <div class="form-group">
         <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+        <input type="password" id="login-password" name="password" placeholder="Masukkan password" autocomplete="current-password" required />
       </div>
       <div id="login-error" class="error-message" role="alert" aria-live="polite"></div>
-      <button type="submit" class="btn btn-primary btn-full" style="margin-top:4px;">Masuk</button>
+      <button type="submit" class="btn btn-primary" style="margin-top:6px;">Masuk</button>
     </form>
+    <div class="auth-footer-link">
+      Belum punya akun? <a href="#/onboarding">Daftar sekarang</a>
+    </div>
   </div>
 </div>
 `;

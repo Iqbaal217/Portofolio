@@ -194,26 +194,25 @@ export function getSatuSehatRecord() {
 // ── Render onboarding form ───────────────────────────────────
 export function render(container) {
   container.innerHTML = `
-<div class="auth-container" style="align-items:flex-start;padding-top:40px;">
-  <div class="auth-card" style="max-width:520px;">
-    <div class="auth-brand">
-      <div class="auth-brand-mark">P</div>
-      <div>
-        <div class="auth-brand-name">PANTAS</div>
-        <div class="auth-brand-sub">Lengkapi profil untuk stratifikasi risiko yang akurat</div>
-      </div>
+<div class="onboarding-screen">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+    <div class="app-header-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     </div>
+    <span style="font-size:1.1rem;font-weight:700;color:var(--blue);">PANTAS</span>
+  </div>
 
-    <div style="display:flex;gap:6px;margin-bottom:24px;">
-      <div id="step-1-ind" style="flex:1;height:3px;border-radius:2px;background:var(--accent);"></div>
-      <div id="step-2-ind" style="flex:1;height:3px;border-radius:2px;background:var(--border);"></div>
-      <div id="step-3-ind" style="flex:1;height:3px;border-radius:2px;background:var(--border);"></div>
+  <div class="onboarding-card">
+    <div style="display:flex;gap:6px;margin-bottom:20px;">
+      <div id="step-1-ind" style="flex:1;height:4px;border-radius:2px;background:var(--blue);"></div>
+      <div id="step-2-ind" style="flex:1;height:4px;border-radius:2px;background:var(--border);"></div>
+      <div id="step-3-ind" style="flex:1;height:4px;border-radius:2px;background:var(--border);"></div>
     </div>
 
     <!-- Step 1: Data Diri -->
     <div id="step-1">
-      <div class="auth-title" style="font-size:0.95rem;margin-bottom:4px;">Data Diri</div>
-      <div class="auth-subtitle" style="margin-bottom:20px;">Informasi dasar untuk kalkulasi BMI dan faktor usia</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">Data Diri</div>
+      <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:18px;">Informasi dasar untuk kalkulasi BMI dan faktor usia</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="form-group" style="grid-column:1/-1;">
           <label>Nama Lengkap</label>
@@ -245,8 +244,8 @@ export function render(container) {
 
     <!-- Step 2: Riwayat Keluarga -->
     <div id="step-2" style="display:none;">
-      <div class="auth-title" style="font-size:0.95rem;margin-bottom:4px;">Riwayat Keluarga</div>
-      <div class="auth-subtitle" style="margin-bottom:20px;">Apakah anggota keluarga inti (orang tua/saudara kandung) pernah didiagnosis dengan kondisi berikut?</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">Riwayat Keluarga</div>
+      <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:18px;">Apakah anggota keluarga inti pernah didiagnosis kondisi berikut?</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
         ${_renderCheckboxGroup('fh', [
           ['hypertension', 'Hipertensi (Tekanan Darah Tinggi)'],
@@ -265,8 +264,8 @@ export function render(container) {
 
     <!-- Step 3: Gaya Hidup & SATU SEHAT -->
     <div id="step-3" style="display:none;">
-      <div class="auth-title" style="font-size:0.95rem;margin-bottom:4px;">Gaya Hidup & SATU SEHAT</div>
-      <div class="auth-subtitle" style="margin-bottom:20px;">Data ini meningkatkan akurasi analisis risiko AI</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">Gaya Hidup & SATU SEHAT</div>
+      <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:18px;">Data ini meningkatkan akurasi analisis risiko AI</div>
       <div class="form-group">
         <label>Status Merokok</label>
         <select id="ob-smoking">
@@ -308,7 +307,7 @@ export function render(container) {
       </div>
       <div style="display:flex;gap:8px;">
         <button id="step-3-back" class="btn btn-full" style="flex:1;">← Kembali</button>
-        <button id="step-3-finish" class="btn btn-primary btn-full" style="flex:2;">Mulai Monitoring</button>
+        <button id="step-3-finish" class="btn btn-primary" style="flex:2;">Mulai Monitoring</button>
       </div>
     </div>
   </div>

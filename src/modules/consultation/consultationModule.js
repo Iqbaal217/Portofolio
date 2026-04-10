@@ -195,49 +195,50 @@ export function exportToCalendar(consultation) {
  * @param {HTMLElement} container
  */
 export function render(container) {
-  container.innerHTML = `
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">P</div>
-      <div class="sidebar-title">PANTAS</div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="sidebar-section">
-        <div class="sidebar-section-label">Monitor</div>
-        <a href="#/dashboard" class="sidebar-link">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>
-          Dashboard
-        </a>
-        <a href="#/history" class="sidebar-link">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 7.75H5.5a.75.75 0 010-1.5h2.5V4.25a.75.75 0 011.5 0v4a.75.75 0 01-.75.75z"/></svg>
-          Riwayat
-        </a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-section-label">Manajemen</div>
-        <a href="#/reminders" class="sidebar-link">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a5 5 0 00-5 5v2.586l-.707.707A1 1 0 003 11h10a1 1 0 00.707-1.707L13 8.586V6a5 5 0 00-5-5zm0 13a2 2 0 01-2-2h4a2 2 0 01-2 2z"/></svg>
-          Pengingat Obat
-        </a>
-        <a href="#/consultation" class="sidebar-link active">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H9l-3 3v-3H3a1 1 0 01-1-1V3z"/></svg>
-          Konsultasi
-        </a>
-      </div>
-    </nav>
-  </aside>
-  <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left"><span class="topbar-title">Jadwal Konsultasi</span></div>
-    </header>
-    <div class="page-content">
+  const isDesktop = window.innerWidth >= 900;
+  if (isDesktop) {
+    container.innerHTML = `
       <div class="placeholder-page">
         <div class="placeholder-icon">🩺</div>
         <div class="placeholder-title">Jadwal Konsultasi Dokter</div>
         <div class="placeholder-desc">Buat dan kelola jadwal konsultasi dengan dokter spesialis. Dapatkan pengingat otomatis 1 jam sebelum jadwal konsultasi Anda.</div>
+      </div>`;
+    return;
+  }
+  container.innerHTML = `
+<div class="app-shell">
+  <header class="app-header">
+    <div class="app-header-brand">
+      <div class="app-header-logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       </div>
+      <span class="app-header-title">PANTAS</span>
+    </div>
+  </header>
+  <div class="app-content">
+    <div class="placeholder-page">
+      <div class="placeholder-icon">🩺</div>
+      <div class="placeholder-title">Jadwal Konsultasi Dokter</div>
+      <div class="placeholder-desc">Buat dan kelola jadwal konsultasi dengan dokter spesialis. Dapatkan pengingat otomatis 1 jam sebelum jadwal konsultasi Anda.</div>
     </div>
   </div>
+  <nav class="bottom-nav">
+    <a href="#/dashboard" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      Beranda
+    </a>
+    <a href="#/history" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Riwayat
+    </a>
+    <a href="#/reminders" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      Pengingat
+    </a>
+    <a href="#/consultation" class="bottom-nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Konsultasi
+    </a>
+  </nav>
 </div>`;
 }

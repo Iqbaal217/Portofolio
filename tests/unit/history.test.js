@@ -1,5 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
+// Force mobile mode in tests
+Object.defineProperty(window, 'innerWidth', { value: 375, writable: true, configurable: true });
+
 // Mock getHistory dari health-repository sebelum import modul history
 vi.mock('../../src/modules/health-repository/healthRepository.js', () => ({
   getHistory: vi.fn(async () => []),
@@ -25,7 +28,7 @@ describe('History Page', () => {
   // 1. render menyuntikkan HTML halaman riwayat ke dalam container
   it('render menyuntikkan HTML halaman riwayat ke dalam container', () => {
     expect(container.innerHTML).not.toBe('');
-    expect(container.querySelector('.history-page')).not.toBeNull();
+    expect(container.querySelector('.app-shell')).not.toBeNull();
   });
 
   // 2. Halaman riwayat memiliki filter form dengan select #filter-type

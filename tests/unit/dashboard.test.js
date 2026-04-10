@@ -1,5 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
+// Force mobile mode in tests (jsdom window.innerWidth defaults to 0)
+Object.defineProperty(window, 'innerWidth', { value: 375, writable: true, configurable: true });
+
 // Mock semua dependensi modul sebelum import dashboard
 vi.mock('../../src/modules/health-monitor/healthMonitor.js', () => ({
   startMonitoring: vi.fn(),

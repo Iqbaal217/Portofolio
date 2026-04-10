@@ -11,205 +11,186 @@ import { openCamera } from '../kalori-detector/kaloriDetector.js';
 import eventBus from '../../utils/eventBus.js';
 
 // HTML template dashboard
-const DASHBOARD_HTML = `
-<div class="app-shell">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">P</div>
-      <div class="sidebar-title">PANTAS</div>
+// HTML template dashboard — hanya konten dalam (tanpa app-shell wrapper)
+// Dirender ke #app (mobile) atau #desktop-content (desktop)
+const DASHBOARD_INNER_HTML = `
+  <!-- Greeting -->
+  <div style="margin-bottom:14px;">
+    <div id="greeting-name" style="font-size:1.1rem;font-weight:700;color:var(--text);">Selamat datang 👋</div>
+    <div style="font-size:0.8rem;color:var(--text-3);margin-top:2px;">Pantau kesehatan Anda hari ini</div>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="health-cards" style="margin-bottom:14px;">
+    <div class="card" style="border-top:3px solid #ef4444;">
+      <div class="card-label">❤️ Detak Jantung</div>
+      <div>
+        <span id="bpm-value" class="metric-value">--</span>
+        <span class="metric-unit">BPM</span>
+      </div>
+      <div class="card-footer">Real-time</div>
     </div>
-    <nav class="sidebar-nav">
-      <div class="sidebar-section">
-        <div class="sidebar-section-label">Monitor</div>
-        <a href="#/dashboard" class="sidebar-link active">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>
-          Dashboard
-        </a>
-        <a href="#/history" class="sidebar-link">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 7.75H5.5a.75.75 0 010-1.5h2.5V4.25a.75.75 0 011.5 0v4a.75.75 0 01-.75.75z"/></svg>
-          Riwayat
-        </a>
+
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <div class="card-label">🩺 Tekanan Darah</div>
+      <div>
+        <span id="bp-value" class="metric-value" style="font-size:1.4rem;">--/--</span>
+        <span class="metric-unit">mmHg</span>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-section-label">Manajemen</div>
-        <a href="#/reminders" class="sidebar-link">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a5 5 0 00-5 5v2.586l-.707.707A1 1 0 003 11h10a1 1 0 00.707-1.707L13 8.586V6a5 5 0 00-5-5zm0 13a2 2 0 01-2-2h4a2 2 0 01-2 2z"/></svg>
-          Pengingat Obat
-        </a>
-        <a href="#/consultation" class="sidebar-link">
-          <svg class="sidebar-link-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v7a1 1 0 01-1 1H9l-3 3v-3H3a1 1 0 01-1-1V3z"/></svg>
-          Konsultasi
-        </a>
-      </div>
-    </nav>
-    <div class="sidebar-footer">
-      <button id="logout-btn" class="btn btn-ghost btn-full" style="justify-content:flex-start;gap:8px;font-size:0.8rem;">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3v-1.5H3.5v-9H6V2zm4.854 2.646l3.5 3.5a.5.5 0 010 .708l-3.5 3.5-1.061-1.061L11.94 9H6V7h5.94L9.793 4.707l1.061-1.061z"/></svg>
-        Keluar
-      </button>
+      <div class="card-footer">Sistolik/Diastolik</div>
     </div>
-  </aside>
 
-  <!-- Main -->
-  <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-title">Dashboard</span>
+    <div class="card" style="border-top:3px solid #16a34a;">
+      <div class="card-label">⚠️ Risiko PTM</div>
+      <div style="margin-top:6px;">
+        <span id="risk-level" class="risk-badge risk-low" style="cursor:pointer;">Rendah</span>
       </div>
-      <div class="topbar-right">
-        <span id="connection-status" class="connection-status disconnected">
-          <span class="dot"></span>Terputus
-        </span>
-        <button id="connect-btn" class="btn btn-primary btn-sm">
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M4.5 1a.5.5 0 01.5.5V3h6V1.5a.5.5 0 011 0V3h1a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1h1V1.5a.5.5 0 01.5-.5z"/></svg>
-          Hubungkan Smartwatch
-        </button>
+      <div class="card-footer">Klik detail</div>
+    </div>
+
+    <div class="card" style="border-top:3px solid #d97706;">
+      <div class="card-label">📷 Kalori</div>
+      <div style="margin-top:6px;">
+        <button id="camera-btn" class="btn btn-sm" style="background:var(--blue-soft);color:var(--blue);border-radius:9px;padding:6px 10px;font-size:0.72rem;width:100%;">Scan Makanan</button>
       </div>
-    </header>
+      <div class="card-footer">Deteksi AI</div>
+    </div>
+  </div>
 
-    <div class="page-content">
-      <!-- Metric Cards -->
-      <div class="health-cards">
-        <div class="card card-heart-rate">
-          <div class="card-label">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 14s-6-4.686-6-8a6 6 0 0112 0c0 3.314-6 8-6 8z"/></svg>
-            Detak Jantung
-          </div>
-          <div>
-            <span id="bpm-value" class="metric-value">--</span>
-            <span class="metric-unit">BPM</span>
-          </div>
-          <div class="card-footer">Pembaruan setiap 30 detik</div>
-        </div>
+  <!-- Risk Detail Panel -->
+  <div id="risk-detail-panel" class="risk-detail-panel" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div class="panel-title">Detail Analisis Risiko</div>
+      <button id="close-risk-detail" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--text-3);">✕</button>
+    </div>
+    <p id="risk-description" class="risk-description"></p>
+    <ul id="risk-recommendations" class="risk-recommendations"></ul>
+  </div>
 
-        <div class="card card-blood-pressure">
-          <div class="card-label">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 2a5 5 0 110 10A5 5 0 018 3z"/></svg>
-            Tekanan Darah
-          </div>
-          <div>
-            <span id="bp-value" class="metric-value">--/--</span>
-            <span class="metric-unit">mmHg</span>
-          </div>
-          <div class="card-footer">Sistolik / Diastolik</div>
-        </div>
-
-        <div class="card card-risk">
-          <div class="card-label">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 14h14L8 1zm0 3l5.5 9.5h-11L8 4z"/></svg>
-            Risiko PTM
-          </div>
-          <div style="margin-top:6px;">
-            <span id="risk-level" class="risk-badge risk-low" style="cursor:pointer;">Rendah</span>
-          </div>
-          <div class="card-footer">Klik untuk detail</div>
-        </div>
-
-        <div class="card card-camera">
-          <div class="card-label">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M10.5 3L9 1H7L5.5 3H2a1 1 0 00-1 1v9a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1h-3.5zM8 12a3 3 0 110-6 3 3 0 010 6z"/></svg>
-            Deteksi Kalori
-          </div>
-          <div style="margin-top:8px;">
-            <button id="camera-btn" class="btn btn-primary btn-sm">Buka Kamera</button>
-          </div>
-          <div class="card-footer">Analisis makanan via AI</div>
-        </div>
+  <!-- AI Analysis -->
+  <div class="section-title">Analisis AI — 7 Hari</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <div class="card-label">Skor Genetik</div>
+      <div style="display:flex;align-items:flex-end;gap:4px;margin-bottom:6px;">
+        <span id="genetic-score" class="metric-value" style="font-size:1.6rem;">--</span>
+        <span class="metric-unit">/100</span>
       </div>
-
-      <!-- Risk Detail Panel -->
-      <div id="risk-detail-panel" class="risk-detail-panel" style="display:none;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-          <div class="panel-title">Detail Analisis Risiko</div>
-          <button id="close-risk-detail" class="btn btn-ghost btn-sm">✕</button>
-        </div>
-        <p id="risk-description" class="risk-description"></p>
-        <ul id="risk-recommendations" class="risk-recommendations"></ul>
+      <div style="height:4px;border-radius:2px;background:var(--border);margin-bottom:6px;">
+        <div id="genetic-bar-fill" style="height:100%;border-radius:2px;background:var(--blue);width:0%;transition:width 0.8s ease;"></div>
       </div>
+      <div id="genetic-desc" class="card-footer">Riwayat keluarga</div>
+    </div>
 
-      <!-- Charts -->
-      <div class="section-title">Grafik Tren</div>
-      <div class="charts-section">
-        <div class="chart-container">
-          <div class="chart-header">
-            <span class="chart-title">Detak Jantung — 24 Jam</span>
-          </div>
-          <div id="hr-chart-container" class="chart"></div>
+    <div class="card">
+      <div class="card-label">Rata-rata</div>
+      <div style="display:flex;flex-direction:column;gap:5px;margin-top:4px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
+          <span style="color:var(--text-3);">Sistolik</span>
+          <span id="avg-systolic" style="color:var(--text);font-weight:600;">--</span>
         </div>
-        <div class="chart-container">
-          <div class="chart-header">
-            <span class="chart-title">Tekanan Darah — 7 Hari</span>
-          </div>
-          <div id="bp-chart-container" class="chart"></div>
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
+          <span style="color:var(--text-3);">Diastolik</span>
+          <span id="avg-diastolic" style="color:var(--text);font-weight:600;">--</span>
         </div>
-      </div>
-
-      <!-- AI Longitudinal Analysis Panel -->
-      <div class="section-title">Analisis AI — Tren 7 Hari</div>
-      <div id="longitudinal-panel" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
-        <!-- Genetic Risk Score -->
-        <div class="card" style="border-left:3px solid var(--accent);">
-          <div class="card-label">Skor Risiko Genetik</div>
-          <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:8px;">
-            <span id="genetic-score" class="metric-value" style="font-size:1.75rem;">--</span>
-            <span class="metric-unit">/100</span>
-          </div>
-          <div id="genetic-bar" style="height:4px;border-radius:2px;background:var(--border);margin-bottom:8px;">
-            <div id="genetic-bar-fill" style="height:100%;border-radius:2px;background:var(--accent);width:0%;transition:width 0.8s ease;"></div>
-          </div>
-          <div id="genetic-desc" class="card-footer">Berdasarkan riwayat keluarga & gaya hidup</div>
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
+          <span style="color:var(--text-3);">BPM</span>
+          <span id="avg-bpm" style="color:var(--text);font-weight:600;">--</span>
         </div>
-
-        <!-- Trend Summary -->
-        <div class="card">
-          <div class="card-label">Rata-rata 7 Hari</div>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
-              <span style="color:var(--text-3);">Sistolik rata-rata</span>
-              <span id="avg-systolic" style="color:var(--text-2);font-weight:600;">--</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
-              <span style="color:var(--text-3);">Diastolik rata-rata</span>
-              <span id="avg-diastolic" style="color:var(--text-2);font-weight:600;">--</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
-              <span style="color:var(--text-3);">BPM rata-rata</span>
-              <span id="avg-bpm" style="color:var(--text-2);font-weight:600;">--</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
-              <span style="color:var(--text-3);">Tren sistolik</span>
-              <span id="systolic-trend" style="font-weight:600;">--</span>
-            </div>
-          </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
+          <span style="color:var(--text-3);">Tren</span>
+          <span id="systolic-trend" style="font-weight:600;">--</span>
         </div>
-      </div>
-
-      <!-- Detected Patterns -->
-      <div id="patterns-section" style="display:none;margin-bottom:20px;">
-        <div class="section-title">Pola Risiko Terdeteksi</div>
-        <div id="patterns-list" style="display:flex;flex-direction:column;gap:8px;"></div>
-      </div>
-
-      <!-- SATU SEHAT Integration Status -->
-      <div id="satusehat-panel" style="display:none;margin-bottom:20px;">
-        <div class="card" style="border-left:3px solid var(--green);">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span style="font-size:0.8rem;font-weight:600;color:var(--text);">🏥 SATU SEHAT</span>
-            <span class="badge badge-green" style="font-size:0.65rem;">Tersinkronisasi</span>
-          </div>
-          <div id="satusehat-info" style="font-size:0.78rem;color:var(--text-3);line-height:1.6;"></div>
-        </div>
-      </div>
-
-      <!-- Lifestyle Guide Panel -->
-      <div id="lifestyle-section" style="margin-bottom:20px;">
-        <div class="section-title">Panduan Gaya Hidup Sehat</div>
-        <div id="lifestyle-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;"></div>
-        <div id="lifestyle-content"></div>
       </div>
     </div>
   </div>
+
+  <!-- Detected Patterns -->
+  <div id="patterns-section" style="display:none;margin-bottom:14px;">
+    <div class="section-title">Pola Risiko Terdeteksi</div>
+    <div id="patterns-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+  </div>
+
+  <!-- SATU SEHAT -->
+  <div id="satusehat-panel" style="display:none;margin-bottom:14px;">
+    <div class="card" style="border-left:4px solid var(--green);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="font-size:0.82rem;font-weight:700;color:var(--text);">🏥 SATU SEHAT</span>
+        <span class="badge badge-green">Tersinkronisasi</span>
+      </div>
+      <div id="satusehat-info" style="font-size:0.78rem;color:var(--text-3);line-height:1.6;"></div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="section-title">Grafik Tren</div>
+  <div class="charts-section">
+    <div class="chart-container">
+      <div class="chart-header">
+        <span class="chart-title">❤️ Detak Jantung — 24 Jam</span>
+      </div>
+      <div id="hr-chart-container" class="chart"></div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-header">
+        <span class="chart-title">🩺 Tekanan Darah — 7 Hari</span>
+      </div>
+      <div id="bp-chart-container" class="chart"></div>
+    </div>
+  </div>
+
+  <!-- Lifestyle Guide -->
+  <div id="lifestyle-section" style="margin-bottom:14px;">
+    <div class="section-title">Panduan Gaya Hidup Sehat</div>
+    <div id="lifestyle-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;"></div>
+    <div id="lifestyle-content"></div>
+  </div>
+`;
+
+// Mobile wrapper (app-shell + bottom nav)
+const DASHBOARD_HTML = `
+<div class="app-shell">
+  <header class="app-header">
+    <div class="app-header-brand">
+      <div class="app-header-logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <span class="app-header-title">PANTAS</span>
+    </div>
+    <div class="app-header-right">
+      <span id="connection-status" class="connection-status disconnected">
+        <span class="dot"></span>Terputus
+      </span>
+      <button id="connect-btn" class="btn btn-sm" style="background:var(--blue);color:white;border-radius:10px;padding:7px 12px;font-size:0.75rem;">
+        Hubungkan
+      </button>
+    </div>
+  </header>
+  <div class="app-content">${DASHBOARD_INNER_HTML}</div>
+  <nav class="bottom-nav">
+    <a href="#/dashboard" class="bottom-nav-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      Beranda
+    </a>
+    <a href="#/history" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Riwayat
+    </a>
+    <a href="#/reminders" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      Pengingat
+    </a>
+    <a href="#/consultation" class="bottom-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Konsultasi
+    </a>
+    <button id="logout-btn" class="bottom-nav-item" style="background:none;border:none;cursor:pointer;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Keluar
+    </button>
+  </nav>
 </div>
 `;
 
@@ -218,7 +199,10 @@ const DASHBOARD_HTML = `
  * @param {HTMLElement} container
  */
 export function render(container) {
-  container.innerHTML = DASHBOARD_HTML;
+  // Desktop: inject hanya inner content (tanpa app-shell wrapper)
+  // Mobile: inject full DASHBOARD_HTML dengan app-shell + bottom nav
+  const isDesktop = window.innerWidth >= 900;
+  container.innerHTML = isDesktop ? DASHBOARD_INNER_HTML : DASHBOARD_HTML;
 
   // Subscribe ke event health:connection untuk update status badge
   eventBus.on('health:connection', ({ status, mode, deviceName }) => {
@@ -327,10 +311,12 @@ export function render(container) {
   const profile = getProfile();
   renderLifestyleGuide(profile);
 
-  // Update topbar dengan nama pengguna
-  const topbarTitle = container.querySelector('.topbar-title');
-  if (topbarTitle && profile.name) {
-    topbarTitle.textContent = `Dashboard — ${profile.name}`;
+  // Update greeting dengan nama pengguna
+  const greetingEl = container.querySelector('#greeting-name');
+  if (greetingEl && profile.name) {
+    const hour = new Date().getHours();
+    const salam = hour < 11 ? 'Selamat pagi' : hour < 15 ? 'Selamat siang' : hour < 18 ? 'Selamat sore' : 'Selamat malam';
+    greetingEl.textContent = `${salam}, ${profile.name} 👋`;
   }
 
   // Toggle panel detail risiko
@@ -376,7 +362,8 @@ export function updateHealthDisplay(data) {
   // Update status koneksi
   const statusEl = document.getElementById('connection-status');
   if (statusEl && connectionStatus !== undefined) {
-    statusEl.textContent = connectionStatus === 'connected' ? 'Terhubung' : 'Terputus';
+    const label = connectionStatus === 'connected' ? 'Terhubung' : 'Terputus';
+    statusEl.innerHTML = `<span class="dot"></span>${label}`;
     statusEl.className = `connection-status ${connectionStatus}`;
   }
 }
