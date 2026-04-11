@@ -26,7 +26,7 @@ const LOGIN_TEMPLATE = `
       <button type="submit" class="btn btn-primary" style="margin-top:6px;">Masuk</button>
     </form>
     <div class="auth-footer-link">
-      Belum punya akun? <a href="#/onboarding">Daftar sekarang</a>
+      Belum punya akun? <a href="#/onboarding" id="register-link">Daftar sekarang</a>
     </div>
   </div>
 </div>
@@ -128,7 +128,6 @@ export function render(container) {
     const email = form.querySelector('#login-email').value;
     const password = form.querySelector('#login-password').value;
 
-    // Clear previous errors
     errorEl.textContent = '';
 
     const { valid, errors } = validateLoginForm(email, password);
@@ -158,4 +157,16 @@ export function render(container) {
       submitBtn.textContent = 'Masuk';
     }
   });
+
+  // "Daftar sekarang" — auto-login dengan akun demo lalu ke onboarding
+  const registerLink = container.querySelector('#register-link');
+  if (registerLink) {
+    registerLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      // Buat session demo agar bisa akses onboarding
+      const demoToken = `demo-token-${Date.now()}`;
+      saveSession(demoToken);
+      window.location.hash = '#/onboarding';
+    });
+  }
 }

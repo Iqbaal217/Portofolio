@@ -113,7 +113,10 @@ const PAGE_TITLES = {
 
 // ── Container helpers ────────────────────────────────────────
 function getContainer() {
-  if (isDesktop() && getSession()) {
+  // Onboarding selalu pakai #app (bukan desktop-content)
+  const hash = window.location.hash || '';
+  const isAuthPage = hash === '#/login' || hash === '#/onboarding' || !hash;
+  if (isDesktop() && getSession() && !isAuthPage) {
     return document.getElementById('desktop-content');
   }
   return document.getElementById('app');
@@ -196,7 +199,7 @@ function handleRoute() {
     appEl.style.display = '';
   }
 
-  // Jika tidak ada session → login
+  // Jika tidak ada session → login (termasuk onboarding tanpa session)
   if (hash !== '#/login' && !getSession()) {
     navigate('#/login');
     return;
@@ -215,7 +218,24 @@ function handleRoute() {
   }
 
   const container = getContainer();
-  if (container) renderFn(container);
+  if (!container) {
+    console.error('[PANTAS] Container tidak ditemukan untuk hash:', hash);
+    return;
+  }
+
+  try {
+    renderFn(container);
+  } catch (err) {
+    console.error('[PANTAS] Error saat render halaman:', hash, err);
+    // Fallback: tampilkan pesan error sederhana
+    container.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:12px;padding:24px;text-align:center;">
+        <div style="font-size:2rem;">⚠️</div>
+        <div style="font-weight:600;color:#1e293b;">Terjadi kesalahan</div>
+        <div style="font-size:0.85rem;color:#64748b;">${err.message}</div>
+        <a href="#/login" style="color:#2563eb;font-weight:600;font-size:0.9rem;">Kembali ke Login</a>
+      </div>`;
+  }
 }
 
 export function navigate(route) {
