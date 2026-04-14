@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="appbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dce8f5"/>
+      <stop offset="100%" style="stop-color:#c8ddf0"/>
+    </linearGradient>
+    <linearGradient id="bluebtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="scenebg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark scene background -->
+  <rect width="800" height="450" fill="url(#scenebg)"/>
+
+  <!-- Decorative circles background -->
+  <circle cx="150" cy="80" r="120" fill="rgba(37,99,235,0.06)"/>
+  <circle cx="650" cy="370" r="150" fill="rgba(37,99,235,0.06)"/>
+
+  <!-- Phone frame -->
+  <rect x="270" y="20" width="260" height="410" rx="32" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <!-- Phone screen -->
+  <rect x="278" y="30" width="244" height="390" rx="26" fill="url(#appbg)"/>
+  <!-- Notch -->
+  <rect x="350" y="30" width="100" height="14" rx="7" fill="#1e293b"/>
+
+  <!-- ── App Header ── -->
+  <rect x="278" y="44" width="244" height="52" rx="0" fill="rgba(255,255,255,0.75)"/>
+  <!-- Logo box -->
+  <rect x="292" y="56" width="32" height="32" rx="9" fill="#2563eb"/>
+  <!-- Logo icon: heartbeat / pulse line -->
+  <polyline points="298,72 304,72 307,64 310,80 313,68 316,72 324,72" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- App title -->
+  <text x="332" y="68" font-family="Inter, sans-serif" font-size="15" font-weight="800" fill="#2563eb" letter-spacing="-0.5">PANTAS</text>
+  <text x="332" y="82" font-family="Inter, sans-serif" font-size="7.5" fill="#475569">Platform Monitoring PTM</text>
+  <!-- Notification bell -->
+  <circle cx="498" cy="72" r="12" fill="rgba(37,99,235,0.1)"/>
+  <text x="498" y="77" font-family="sans-serif" font-size="13" fill="#2563eb" text-anchor="middle">🔔</text>
+
+  <!-- ── Dashboard content ── -->
+  <!-- Greeting -->
+  <text x="292" y="116" font-family="Inter, sans-serif" font-size="11" fill="#475569">Selamat pagi,</text>
+  <text x="292" y="130" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#1e293b">Iqbal Paqih 👋</text>
+
+  <!-- Risk card -->
+  <rect x="286" y="138" width="228" height="72" rx="16" fill="white" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.08))"/>
+  <text x="300" y="158" font-family="Inter, sans-serif" font-size="9" fill="#475569">Risiko PTM Anda</text>
+  <text x="300" y="178" font-family="Inter, sans-serif" font-size="22" font-weight="800" fill="#16a34a">Rendah</text>
+  <circle cx="476" cy="168" r="22" fill="#dcfce7"/>
+  <text x="476" y="174" font-family="sans-serif" font-size="20" text-anchor="middle">✅</text>
+  <text x="300" y="200" font-family="Inter, sans-serif" font-size="8" fill="#94a3b8">Terakhir diperbarui: hari ini</text>
+
+  <!-- Vitals row -->
+  <rect x="286" y="220" width="108" height="64" rx="14" fill="white"/>
+  <text x="340" y="240" font-family="Inter, sans-serif" font-size="8" fill="#475569" text-anchor="middle">Tekanan Darah</text>
+  <text x="340" y="258" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#2563eb" text-anchor="middle">120/80</text>
+  <text x="340" y="272" font-family="Inter, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">mmHg</text>
+
+  <rect x="406" y="220" width="108" height="64" rx="14" fill="white"/>
+  <text x="460" y="240" font-family="Inter, sans-serif" font-size="8" fill="#475569" text-anchor="middle">Detak Jantung</text>
+  <text x="460" y="258" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#ef4444" text-anchor="middle">72 bpm</text>
+  <text x="460" y="272" font-family="Inter, sans-serif" font-size="7" fill="#94a3b8" text-anchor="middle">Normal</text>
+
+  <!-- Mini chart -->
+  <rect x="286" y="294" width="228" height="70" rx="14" fill="white"/>
+  <text x="300" y="310" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#1e293b">Tren Tekanan Darah</text>
+  <polyline points="296,350 316,342 336,346 356,338 376,340 396,334 416,336 436,330 456,332 476,328 496,330 506,332" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="296,358 316,354 336,356 356,352 376,354 396,350 416,352 436,348 456,350 476,346 496,348 506,350" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3,2"/>
+
+  <!-- Bottom nav -->
+  <rect x="278" y="376" width="244" height="44" rx="0" fill="rgba(255,255,255,0.95)"/>
+  <text x="316" y="402" font-family="sans-serif" font-size="16" text-anchor="middle">🏠</text>
+  <text x="370" y="402" font-family="sans-serif" font-size="16" text-anchor="middle">📊</text>
+  <text x="424" y="402" font-family="sans-serif" font-size="16" text-anchor="middle">💊</text>
+  <text x="478" y="402" font-family="sans-serif" font-size="16" text-anchor="middle">👤</text>
+
+  <!-- Side label left -->
+  <text x="60" y="200" font-family="Inter, sans-serif" font-size="28" font-weight="800" fill="white" opacity="0.9">PANTAS</text>
+  <text x="60" y="225" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">Platform Monitoring</text>
+  <text x="60" y="242" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">PTM Terintegrasi</text>
+  <rect x="60" y="255" width="140" height="2" rx="1" fill="#2563eb" opacity="0.5"/>
+  <text x="60" y="278" font-family="Inter, sans-serif" font-size="9" fill="#64748b">AI · Smartwatch · Kesehatan</text>
+
+  <!-- Side label right -->
+  <text x="580" y="200" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">Deteksi Dini</text>
+  <text x="580" y="218" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">Risiko PTM</text>
+  <rect x="580" y="228" width="100" height="2" rx="1" fill="#2563eb" opacity="0.5"/>
+  <text x="580" y="248" font-family="Inter, sans-serif" font-size="9" fill="#64748b">Tekanan Darah</text>
+  <text x="580" y="262" font-family="Inter, sans-serif" font-size="9" fill="#64748b">Gaya Hidup</text>
+  <text x="580" y="276" font-family="Inter, sans-serif" font-size="9" fill="#64748b">Monitoring Real-time</text>
+</svg>

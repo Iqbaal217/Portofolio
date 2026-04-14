@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bg)"/>
+
+  <!-- Browser chrome -->
+  <rect x="40" y="30" width="720" height="390" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <!-- Browser top bar -->
+  <rect x="40" y="30" width="720" height="36" rx="12" fill="#0f172a"/>
+  <rect x="40" y="54" width="720" height="12" fill="#0f172a"/>
+  <!-- Traffic lights -->
+  <circle cx="68" cy="48" r="6" fill="#ef4444"/>
+  <circle cx="88" cy="48" r="6" fill="#f59e0b"/>
+  <circle cx="108" cy="48" r="6" fill="#22c55e"/>
+  <!-- URL bar -->
+  <rect x="130" y="38" width="400" height="20" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="330" y="52" font-family="Inter, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">iqbaal217.github.io/Portofolio</text>
+
+  <!-- Navbar inside browser -->
+  <rect x="40" y="66" width="720" height="44" fill="#0f172a"/>
+  <text x="72" y="93" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="white">Iqbal Paqih</text>
+  <text x="480" y="93" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">Home</text>
+  <text x="530" y="93" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">About</text>
+  <text x="580" y="93" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">Projects</text>
+  <text x="640" y="93" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">Contact</text>
+
+  <!-- Hero section -->
+  <rect x="40" y="110" width="720" height="180" fill="#0f172a"/>
+  <!-- Profile circle -->
+  <circle cx="200" cy="200" r="55" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
+  <circle cx="200" cy="185" r="22" fill="#334155"/>
+  <ellipse cx="200" cy="230" rx="35" ry="20" fill="#334155"/>
+  <!-- Hero text -->
+  <text x="290" y="175" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="white">Iqbal Paqih Adhinegoro</text>
+  <text x="290" y="200" font-family="Inter, sans-serif" font-size="12" fill="#94a3b8">Mahasiswa Informatika | Web Developer</text>
+  <rect x="290" y="215" width="110" height="32" rx="8" fill="url(#accent)"/>
+  <text x="345" y="235" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">Lihat Proyek</text>
+  <rect x="412" y="215" width="110" height="32" rx="8" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="467" y="235" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2563eb" text-anchor="middle">Kontak Saya</text>
+
+  <!-- Skills section preview -->
+  <rect x="40" y="290" width="720" height="110" fill="#0f172a"/>
+  <text x="400" y="315" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">Keahlian</text>
+  <!-- Skill bars -->
+  <rect x="72" y="328" width="180" height="8" rx="4" fill="#1e293b"/>
+  <rect x="72" y="328" width="162" height="8" rx="4" fill="url(#accent)"/>
+  <text x="72" y="322" font-family="Inter, sans-serif" font-size="9" fill="#94a3b8">HTML 90%</text>
+
+  <rect x="280" y="328" width="180" height="8" rx="4" fill="#1e293b"/>
+  <rect x="280" y="328" width="153" height="8" rx="4" fill="url(#accent)"/>
+  <text x="280" y="322" font-family="Inter, sans-serif" font-size="9" fill="#94a3b8">CSS 85%</text>
+
+  <rect x="488" y="328" width="180" height="8" rx="4" fill="#1e293b"/>
+  <rect x="488" y="328" width="135" height="8" rx="4" fill="url(#accent)"/>
+  <text x="488" y="322" font-family="Inter, sans-serif" font-size="9" fill="#94a3b8">JavaScript 75%</text>
+
+  <rect x="72" y="360" width="180" height="8" rx="4" fill="#1e293b"/>
+  <rect x="72" y="360" width="126" height="8" rx="4" fill="url(#accent)"/>
+  <text x="72" y="354" font-family="Inter, sans-serif" font-size="9" fill="#94a3b8">Networking 70%</text>
+
+  <rect x="280" y="360" width="180" height="8" rx="4" fill="#1e293b"/>
+  <rect x="280" y="360" width="117" height="8" rx="4" fill="url(#accent)"/>
+  <text x="280" y="354" font-family="Inter, sans-serif" font-size="9" fill="#94a3b8">Linux 65%</text>
+
+  <rect x="488" y="360" width="180" height="8" rx="4" fill="#1e293b"/>
+  <rect x="488" y="360" width="108" height="8" rx="4" fill="url(#accent)"/>
+  <text x="488" y="354" font-family="Inter, sans-serif" font-size="9" fill="#94a3b8">Database 60%</text>
+
+  <!-- Label badge -->
+  <rect x="310" y="400" width="180" height="28" rx="14" fill="url(#accent)"/>
+  <text x="400" y="418" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">Web Portfolio</text>
+</svg>
